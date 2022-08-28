@@ -1,0 +1,9 @@
+library: data/result.json
+substitutions: data/substitutions.txt
+adjustments:
+    titles: data/adjustments/titles.json
+    links: data/adjustments/links.json
+    authors: data/adjustments/authors.json
+    dates: data/adjustments/dates.json
+    nations: data/adjustments/nations.json
+    places: data/adjustments/places.json
