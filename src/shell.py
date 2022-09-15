@@ -3,7 +3,7 @@ import json
 import src.fdate as fdate
 import src.scanner as scanner
 import matplotlib.pyplot as plot
-import datetime as dt
+from src import parser
 
 
 class Filter:
@@ -132,6 +132,13 @@ class Shell:
         self.del_("__tmp__")
     
 
+    def get_library(self, inlib: str):
+        return self.libraries[inlib]
+    
+    def set_library(self, outlib: str, lib: list):
+        self.libraries[outlib] = list(lib)
+
+
     # Select works in a given time range
     def time_range(self, inlib: str, time_range: tuple, outlib: str):
         res = []
@@ -146,20 +153,22 @@ class Shell:
         self.libraries[outlib] = res
     
 
-    def stat(self, inlib: str, field: str):
+    def stat(self, inlib: str, field: str, opt: str = None):
         library = self.libraries[inlib]
         counter = {}
 
         for work in library:
-            if work[field] in counter:
-                counter[work[field]] += 1
+            value = parser.extract_info(work, field, opt)
+
+            if value in counter:
+                counter[value] += 1
             else:
-                counter[work[field]] = 1
+                counter[value] = 1
         
         sorted_counter = sorted([(key, counter[key]) for key in counter], key=lambda x: x[1], reverse=True)
 
         for (key, value) in sorted_counter:
-            print("%-12s : %3d" % (str(key), value))
+            print("%-25s : %-5d" % (str(key), value))
     
 
     def plot(self, inlib: list = "general",

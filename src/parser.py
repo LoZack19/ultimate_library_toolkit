@@ -109,3 +109,17 @@ def parse(clears: list, files: dict, verbose=False) -> list:
         works.append(work)
 
     return works
+
+def extract_info(work: dict, field: str, opt: str):
+    res = work[field]
+
+    if field == 'link':
+        if opt != 'None':
+            link = re.split(r"://|/", work[field])
+
+            if opt == 'domain':
+                res = link[1]
+            if opt == 'archive':
+                res = "%s    %s" % (link[1], link[2].split('?', maxsplit=1)[0] if link[1] == 't.me' else '')
+
+    return res
