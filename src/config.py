@@ -8,7 +8,7 @@ def init_config(filename: str) -> dict:
 	
 	return config
 
-CONFIG_FILE = "/home/giovanni/Scaricati/ULT/config.yaml"
+CONFIG_FILE = "config.yaml"
 CONFIG = init_config(CONFIG_FILE)
 
 library = CONFIG["library"]

@@ -3,7 +3,7 @@ import json
 def load(filename: str, verbose=False) -> list:
     raws = []
 
-    with open(filename, 'r') as infile:
+    with open(filename, 'r', encoding='utf8') as infile:
         messages = [message["text"] for message in json.load(infile)["messages"]]
     
     for message in messages:
