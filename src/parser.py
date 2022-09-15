@@ -110,11 +110,12 @@ def parse(clears: list, files: dict, verbose=False) -> list:
 
     return works
 
-def extract_info(work: dict, field: str, opt: str):
+
+def extract_info(work: dict, field: str, opt: str = None):
     res = work[field]
 
     if field == 'link':
-        if opt != 'None':
+        if opt != None:
             link = re.split(r"://|/", work[field])
 
             if opt == 'domain':

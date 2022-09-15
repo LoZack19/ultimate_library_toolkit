@@ -33,15 +33,17 @@ sh.select("general", "author", "Salvatore Giordano", "giordano")
 
 ### Select and Discard
 ```
-sh.select(inlib, field, arg, outlib)
+sh.select(inlib, field, arg, outlib, extra)
 ```
 
 It selects all works in the `inlib` library that have `arg` as the value of the `field` field, and puts them in a library called `outlib`.
 
 Possible field values are: `author`, `nation`, `place`, `title`, `date`, and even `link`, although the most useful are the first three.
 
+The select command also includes the optional `extra` argument that allows selection based on more precise criteria, such as the domain of the link. If we wanted to select works based on the domain on which they are saved, we would have to add among the arguments `extra = 'domain'`. By default it holds `None` and it has no effect not to specify it.
+
 ```
-sh.discard(inlib, field, arg, outlib)
+sh.discard(inlib, field, arg, outlib, extra)
 ```
 
 Identical to `sh.select`, but instead of selecting works from the `inlib` library, it selects the only works from `inlib` that will not go into outlib.
@@ -81,12 +83,14 @@ The list operation is used to list all the libraries currently in use, each acco
 
 ```
 sh.print_(inlib)
-sh.stat(inlib, field)
+sh.stat(inlib, field, opt)
 ```
 
 There are three operations for showing general information about a library. These operations are print, stat, and plot. The plotting operation is sufficiently complex to merit its own paragraph.
 
 Print takes as input a library and prints all its works in BSL format. Stat, on the other hand, takes as input a library and a field (e.g., `author`) and lists how many occurrences of each value exist for that field (e.g., lists how many works each author wrote in the particular library specified). Values are listed in order with respect to the frequency with which they appear.
+
+Stat shows numerical statistics on the specified library works related to the specified field. The `field` parameter can be accompanied by the optional `opt` specifier, which, as with `extra` in `select`, allows us to specify for a complex field what we specifically want to search for. For example if the field is `link` and we put `opt = 'domain'` the statistics provided will be about the domains used.
 
 ### Saving and loading
 

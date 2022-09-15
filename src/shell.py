@@ -10,11 +10,11 @@ class Filter:
 
     @staticmethod
     # Return the works from the library whose value for the specified field matches the given value
-    def filter(library: list, field: str, match: str) -> list:
+    def filter(library: list, field: str, match: str, opt: str = None) -> list:
         res = []
 
         for work in library:
-            if work[field] == match:
+            if parser.extract_info(work, field, opt) == match:
                 res.append(work)
 
         return res
@@ -118,16 +118,16 @@ class Shell:
     
 
     # Select works which match a particular value for a given field
-    def select(self, inlib: str, field: str, arg: str, outlib: str):
+    def select(self, inlib: str, field: str, arg: str, outlib: str, extra: str = None):
         library = self.libraries[inlib]
         match = self.resolver.resolve_field(field, arg)
 
-        self.libraries[outlib] = Filter.filter(library, field, match)
+        self.libraries[outlib] = Filter.filter(library, field, match, extra)
     
 
     # Discard works which match a particular value for a given field
-    def discard(self, inlib: str, field: str, arg: str, outlib: str):
-        self.select(inlib, field, arg, "__tmp__")
+    def discard(self, inlib: str, field: str, arg: str, outlib: str, extra: str = None):
+        self.select(inlib, field, arg, "__tmp__", extra)
         self.not_("__tmp__", outlib, inlib)
         self.del_("__tmp__")
     
